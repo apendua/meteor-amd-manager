@@ -1,4 +1,4 @@
-# meteor-amd-manager
+# meteor-amd-manager [![Build Status](https://travis-ci.org/apendua/meteor-amd-manager.svg?branch=master)](https://travis-ci.org/apendua/meteor-amd-manager)
 
 This package provides `AMDManager` class that allows you to implement your own `define/require` module management routines.
 
