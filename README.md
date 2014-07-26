@@ -1,0 +1,1 @@
+# meteor-amd-manager
