@@ -1,0 +1,9 @@
+{
+  "name": "amd-manager",
+  "description": "A simple utility class for creating AMD module managers",
+  "homepage": "https://github.com/apendua/amd-manager",
+  "author": "Tomasz Lenarcik",
+  "version": "0.0.1",
+  "git": "https://github.com/apendua/amd-manager.git",
+  "packages": {}
+}
