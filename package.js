@@ -22,6 +22,6 @@ Package.on_test(function (api) {
 
   // TESTS
   api.add_files([
-    'tests.js',
+    'tinytest.js',
   ], 'client');
 });
