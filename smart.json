@@ -1,9 +1,0 @@
-{
-  "name": "amd-manager",
-  "description": "A simple utility class for creating AMD module managers",
-  "homepage": "https://github.com/apendua/meteor-amd-manager",
-  "author": "Tomasz Lenarcik",
-  "version": "0.0.4",
-  "git": "https://github.com/apendua/meteor-amd-manager.git",
-  "packages": {}
-}

@@ -6,7 +6,7 @@ This package provides `AMDManager` class that allows you to implement your own `
 
 Simply type
 ```
-mrt add amd-manager
+meteor add amd:manager
 ```
 and you're good to go.
 
