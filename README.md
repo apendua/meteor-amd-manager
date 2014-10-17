@@ -45,5 +45,10 @@ define.amd = true;
 
 ## Methods
 
-The only non-obvious method of the manager is `onModuleNotFound` which allows you to define a callbeck to be called every time should the user request a module that has not been defined yet. You can use it to decide if there is a need to download additional source code from the server.
+The only non-obvious methods of the manager are:
 
+ * `onModuleNotFound` which allows you to define a callback to be called every time should the user request a
+   module that has not been defined yet. You can use it to decide if there is a need to download additional source
+   code from the server.
+ * `onModuleAlreadyDefined` which is called when a module is trying to be defined with the same as an already
+   defined module. You can use it to display a warning or throw an error.
