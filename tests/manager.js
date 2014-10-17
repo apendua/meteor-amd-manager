@@ -99,6 +99,35 @@ describe('AMDManager', function () {
 
   });
 
+  describe('module already defined', function (test) {
+
+    var manager = new AMDManager({
+          onModuleAlreadyDefined: function () {
+            alreadyDefined++;
+          }
+        }),
+        require  = manager.require,
+        define   = manager.define,
+        alreadyDefined = 0;
+
+    manager.onModuleAlreadyDefined(function () {
+      alreadyDefined++;
+    });
+
+    define('a', [], function () {
+
+    });
+
+    define('a', [], function () {
+
+    });
+
+    it('should be able to use onModuleAlreadyDefined hook', function () {
+      expect(alreadyDefined).to.equal(2);
+    });
+
+  });
+
   describe('circular dependencies', function (test) {
 
     var manager = new AMDManager(),

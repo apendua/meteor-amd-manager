@@ -4,6 +4,7 @@ AMDManager = function (options) {
   var manager = this,
       modules = {},
       notFoundHooks = [],
+      alreadyDefinedHooks = [],
       listOfModules = [],
       loadingStack  = [];
 
@@ -14,6 +15,12 @@ AMDManager = function (options) {
   };
 
   manager.onModuleNotFound(options.onModuleNotFound);
+
+  manager.onModuleAlreadyDefined = function (callback) {
+    _.isFunction(callback) && alreadyDefinedHooks.push(callback);
+  };
+
+  manager.onModuleAlreadyDefined(options.onModuleAlreadyDefined);
 
   // taken from node.js path.js implementation
   var normalize = function (parts) {
@@ -102,7 +109,10 @@ AMDManager = function (options) {
   manager.define = function (name, deps, body) {
     var module = getOrCreate(name);
     if (_.has(module, 'body')) {
-      throw new Error('Module "' + name + '" is already defined.');
+      _.each(alreadyDefinedHooks, function (callback) {
+        callback.call(manager, name, deps, body);
+      });
+      return;
     }
     module.deps = deps;
     module.body = body;
