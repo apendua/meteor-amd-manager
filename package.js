@@ -1,7 +1,7 @@
 
 Package.describe({
   summary: "A simple utility class for creating AMD module managers",
-  version: "0.0.5",
+  version: "0.1.0",
   name: "amd:manager",
   git: "https://github.com/apendua/meteor-amd-manager.git",
 });
