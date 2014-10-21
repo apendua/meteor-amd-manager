@@ -120,6 +120,8 @@ AMDManager = function (options) {
     manager.load(module);
   };
 
+  //TODO - we can modify require to call body.apply with an object
+  // whose keys are dep names, and whose bodies are the loaded module
   manager.require = function (deps, body) {
     var todo = deps.length, _deps = _.clone(deps);
     var resolve = function (data, i) {
