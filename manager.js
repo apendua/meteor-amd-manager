@@ -120,14 +120,19 @@ AMDManager = function (options) {
     manager.load(module);
   };
 
-  //TODO - we can modify require to call body.apply with an object
-  // whose keys are dep names, and whose bodies are the loaded module
   manager.require = function (deps, body) {
-    var todo = deps.length, _deps = _.clone(deps);
-    var resolve = function (data, i) {
+    var depIdx = deps.length,
+        _deps = _.clone(deps),
+        _context = {};
+
+    // resolve builds up:
+    //   _deps - an array passed as an argument to the factory function
+    //   _context - a map of dep name to dep
+    var resolve = function (data, i, name) {
       _deps[i] = data;
-      if (--todo <= 0) {
-        body.apply({}, _deps);
+      _context[name] = data;
+      if (--depIdx <= 0) {
+        body.apply(_context, _deps);
       }
     };
     if (deps.length === 0) {
@@ -135,7 +140,7 @@ AMDManager = function (options) {
     } else {
       _.each(deps, function (name, i) {
         manager.load(getOrCreate(name), function (data) {
-          resolve(data, i);
+          resolve(data, i, name);
         });
       });
     }
