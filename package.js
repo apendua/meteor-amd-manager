@@ -1,14 +1,14 @@
 
 Package.describe({
   summary: "A simple utility class for creating AMD module managers",
-  version: "0.1.0",
+  version: "0.1.1",
   name: "amd:manager",
   git: "https://github.com/apendua/meteor-amd-manager.git",
 });
 
 Package.on_use(function (api) {
   if (api.versionsFrom) {
-    api.versionsFrom("METEOR@0.9.0");
+    api.versionsFrom([ "METEOR@0.9.0", "METEOR@1.0" ]);
   }
   api.use(['underscore'], ['client', 'server']);
   api.add_files([
