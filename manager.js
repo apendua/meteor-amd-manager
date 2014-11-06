@@ -121,18 +121,17 @@ AMDManager = function (options) {
   };
 
   manager.require = function (deps, body) {
-    var depIdx = deps.length,
-        _deps = _.clone(deps),
-        _context = {};
+    var todo = deps.length;
+    var depsReady = new Array(todo);
+    var depsByName = {};
 
     // resolve builds up:
-    //   _deps - an array passed as an argument to the factory function
-    //   _context - a map of dep name to dep
+    //   depsReady  - an array passed as an argument to the factory function
+    //   depsByName - a map of dep name to dep
     var resolve = function (data, i, name) {
-      _deps[i] = data;
-      _context[name] = data;
-      if (--depIdx <= 0) {
-        body.apply(_context, _deps);
+      depsReady[i] = depsByName[name] = data;
+      if (--todo <= 0) {
+        body.apply(depsByName, depsReady);
       }
     };
     if (deps.length === 0) {
@@ -147,26 +146,3 @@ AMDManager = function (options) {
   };
 
 };
-
-/* TODO: is it possible to implement the same features with Primise API?
-AMDManager = function () {
-  var modules = {};
-  function getOrCreate(name) {
-    if (modules[name] === undefined) {
-      modules[name] = new Promise(function (resolve, reject) {
-        modules[name].resolve = resolve;
-      });
-    }
-    return modules[name];
-  }
-  this.define = function (name, deps, body) {
-    getOrCreate(name);
-    //---------------------------------------
-    Promise.all(_.map(deps, function (name) {
-      return getOrCreate(name);
-    })).then(function(deps) {
-      modules[name].resolve(body.apply(null, deps));
-    });
-  };
-}
-*/
