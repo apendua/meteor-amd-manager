@@ -40,7 +40,7 @@ define = function (name, deps, body) {
   manager.define(name, deps, body);
 }
 
-define.amd = true;
+define.amd = {};
 ```
 
 ## Methods
