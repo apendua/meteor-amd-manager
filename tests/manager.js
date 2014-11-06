@@ -155,4 +155,40 @@ describe('AMDManager', function () {
 
   });
 
+  describe('the context of the factory function', function (test) {
+
+    var manager = new AMDManager(),
+        require = manager.require,
+        define  = manager.define;
+
+    before(function () {
+      require(['a', 'b', 'kebab-module'], function (a, b) {
+        expect(a).to.equal(1);
+        expect(b).to.equal(2);
+        expect(this.a).to.equal(a);
+        expect(this.b).to.equal(b);
+        expect(this['kebab-module']).to.equal('skewered');
+        expect(this.kebabModule).to.equal(undefined);
+      });
+    });
+
+    it('should be able to recieve references to dependencies via `this`', function () {
+
+      define('b', ['a', ], function () {
+        return 2;
+      });
+
+      define('a', [], function () {
+        return 1;
+      });
+
+      define('kebab-module', [], function(){
+        return 'skewered';
+      })
+
+    });
+
+  });
+
+
 });
