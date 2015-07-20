@@ -6,27 +6,15 @@ Package.describe({
   git: "https://github.com/apendua/meteor-amd-manager.git",
 });
 
-Package.on_use(function (api) {
-  if (api.versionsFrom) {
-    api.versionsFrom([ "METEOR@0.9.0", "METEOR@1.0" ]);
-  }
-  api.use(['underscore'], ['client', 'server']);
-  api.add_files([
+Package.onUse(function (api) {
+
+  api.versionsFrom([ "METEOR@0.9.0", "METEOR@1.0" ]);
+  
+  api.addFiles([
     'meteor/common.js',
     'manager.js',
     'meteor/exports.js',
   ], ['client', 'server']);
-  if (api.export !== undefined) {
-    api.export('AMDManager', ['client', 'server']);
-  }
-});
-
-Package.on_test(function (api) {
-  // ENVIRONMENT
-  api.use('tinytest', ['client', 'server']);
-  api.add_files('manager.js', ['client', 'server']);
-  // TESTS
-  api.add_files([
-    'tinytest.js',
-  ], 'client');
+  
+  api.export('AMDManager', ['client', 'server']);
 });
