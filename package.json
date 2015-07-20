@@ -9,7 +9,7 @@
     "url": "git://github.com/apendua/amd-manager.git"
   },
   "scripts": {
-    "test": "mocha tests"
+    "test": "./test.sh"
   },
   "dependencies": {},
   "devDependencies": {
