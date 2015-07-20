@@ -12,7 +12,9 @@ Package.on_use(function (api) {
   }
   api.use(['underscore'], ['client', 'server']);
   api.add_files([
+    'meteor/common.js',
     'manager.js',
+    'meteor/exports.js',
   ], ['client', 'server']);
   if (api.export !== undefined) {
     api.export('AMDManager', ['client', 'server']);

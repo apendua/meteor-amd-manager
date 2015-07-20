@@ -1,4 +1,5 @@
 var expect = require('chai').expect;
+var AMDManager = require('../manager.js');
 
 describe('AMDManager', function () {
 

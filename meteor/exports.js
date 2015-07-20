@@ -1,0 +1,1 @@
+AMDManager = module.exports;

@@ -1,5 +1,5 @@
 
-AMDManager = function (options) {
+module.exports = function AMDManager (options) {
   'use strict';
 
   var manager = this,
