@@ -63,20 +63,8 @@ AMDManager = function (options) {
     return modules[name];
   };
 
-  manager.get = function (name) { return modules[name] && modules[name].data; };
-
-  // TODO: do we need this one?
-  manager.getModule = function (name) {
-    return modules[name];
-  };
-
-  manager.forEach = function (prefix, callback) {
-    var regexp = new RegExp(prefix);
-    _.each(listOfModules, function (module) {
-      if (_.has(module, 'body') && regexp.test(module.name)) {
-        callback.call({}, module, module.name);
-      }
-    });
+  manager.get = function (name) {
+    return modules[name] && modules[name].data;
   };
 
   // - resolve relative names
