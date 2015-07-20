@@ -1,5 +1,6 @@
 
 AMDManager = function (options) {
+  'use strict';
 
   var manager = this,
       modules = {},
@@ -11,13 +12,17 @@ AMDManager = function (options) {
   options = options || {};
 
   manager.onModuleNotFound = function (callback) {
-    _.isFunction(callback) && notFoundHooks.push(callback);
+    if (typeof callback === 'function') {
+      notFoundHooks.push(callback);
+    }
   };
 
   manager.onModuleNotFound(options.onModuleNotFound);
 
   manager.onModuleAlreadyDefined = function (callback) {
-    _.isFunction(callback) && alreadyDefinedHooks.push(callback);
+    if (typeof callback === 'function') {
+      alreadyDefinedHooks.push(callback);
+    }
   };
 
   manager.onModuleAlreadyDefined(options.onModuleAlreadyDefined);
@@ -52,13 +57,18 @@ AMDManager = function (options) {
   };
 
   var getOrCreate = function (name) {
-    return modules[name] = modules[name] || { name : name, call : [] };
+    if (!modules[name]) {
+      modules[name] = { name : name, call : [] };
+    }
+    return modules[name];
   };
 
   manager.get = function (name) { return modules[name] && modules[name].data; };
 
   // TODO: do we need this one?
-  manager.getModule = function (name) { return module[name] };
+  manager.getModule = function (name) {
+    return modules[name];
+  };
 
   manager.forEach = function (prefix, callback) {
     var regexp = new RegExp(prefix);
@@ -67,7 +77,7 @@ AMDManager = function (options) {
         callback.call({}, module, module.name);
       }
     });
-  }
+  };
 
   // - resolve relative names
   // - require all dependecies
@@ -75,9 +85,13 @@ AMDManager = function (options) {
   manager.load = function (module, action) { //XXX action can be undefined
     if (_.has(module, 'data')) {
       // it seems that the module has been already loaded
-      _.isFunction(action) && action.call({}, module.data);
+      if (typeof action === 'function') {
+        action.call({}, module.data);
+      }
     } else {
-      _.isFunction(action) && module.call.push(action); // call later
+      if (typeof action === 'function') {
+        module.call.push(action); // call later
+      }
       if (!module.lock && _.has(module, 'body')) {
         module.lock = true;
         loadingStack.push(module.name);
