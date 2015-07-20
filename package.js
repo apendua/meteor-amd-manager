@@ -12,7 +12,7 @@ Package.onUse(function (api) {
   
   api.addFiles([
     'meteor/common.js',
-    'manager.js',
+    'lib/AMDManager.js',
     'meteor/exports.js',
   ], ['client', 'server']);
   
