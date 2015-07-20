@@ -11,6 +11,24 @@ module.exports = function AMDManager (options) {
 
   options = options || {};
 
+  function each(array, it) {
+    for (var i=0; i<array.length; i++) {
+      it(array[i], i);
+    }
+  }
+  
+  function has(obj, key) {
+    return obj && obj.hasOwnProperty(key);
+  }
+  
+  function map(array, it) {
+    var mapped = [];
+    each(array, function (el, i) {
+      mapped.push(it(el, i));
+    });
+    return mapped;
+  }
+
   manager.onModuleNotFound = function (callback) {
     if (typeof callback === 'function') {
       notFoundHooks.push(callback);
@@ -47,7 +65,8 @@ module.exports = function AMDManager (options) {
   };
 
   var relativeTo = function (parent) {
-    var parts = _.initial(parent.split('/'));
+    var parts = parent.split('/');
+    parts = parts.slice(0, Math.max(0, parts.length - 1));
     return function (name) {
       if (name.charAt(0) === '.') {
         return normalize(parts.concat(name.split('/'))).join('/');
@@ -71,7 +90,7 @@ module.exports = function AMDManager (options) {
   // - require all dependecies
   // - finally call module body
   manager.load = function (module, action) { //XXX action can be undefined
-    if (_.has(module, 'data')) {
+    if (has(module, 'data')) {
       // it seems that the module has been already loaded
       if (typeof action === 'function') {
         action.call({}, module.data);
@@ -80,11 +99,11 @@ module.exports = function AMDManager (options) {
       if (typeof action === 'function') {
         module.call.push(action); // call later
       }
-      if (!module.lock && _.has(module, 'body')) {
+      if (!module.lock && has(module, 'body')) {
         module.lock = true;
         loadingStack.push(module.name);
-        manager.require(_.map(module.deps, relativeTo(module.name)), function () {
-          if (!_.has(module, 'data')) {
+        manager.require(map(module.deps, relativeTo(module.name)), function () {
+          if (!has(module, 'data')) {
             // TODO: do we need nonreactive wrapper here?
             module.data = module.body.apply({}, arguments);
           }
@@ -100,7 +119,7 @@ module.exports = function AMDManager (options) {
           console.warn('Circular dependency detected', loadingStack.join('->') + '->' + module.name + '; ',
               'dependencies for `' + module.name + '` cannot be resolved');
         } else {
-          _.each(notFoundHooks, function (callback) {
+          each(notFoundHooks, function (callback) {
             callback.call(manager, module);
           });
         }
@@ -110,8 +129,8 @@ module.exports = function AMDManager (options) {
 
   manager.define = function (name, deps, body) {
     var module = getOrCreate(name);
-    if (_.has(module, 'body')) {
-      _.each(alreadyDefinedHooks, function (callback) {
+    if (has(module, 'body')) {
+      each(alreadyDefinedHooks, function (callback) {
         callback.call(manager, name, deps, body);
       });
       return;
@@ -139,7 +158,7 @@ module.exports = function AMDManager (options) {
     if (deps.length === 0) {
       body.apply({});
     } else {
-      _.each(deps, function (name, i) {
+      each(deps, function (name, i) {
         manager.load(getOrCreate(name), function (data) {
           resolve(data, i, name);
         });
