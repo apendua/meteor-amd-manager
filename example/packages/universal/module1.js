@@ -1,8 +1,5 @@
-var name = 'index';
-var deps = [
-  './module1',
-  './module2',
-];
+var name = 'module1';
+var deps = [];
 
 (function (factory) {
   'use strict';
@@ -16,9 +13,8 @@ var deps = [
 }(function (require, module, exports) {
   'use strict';
 
-  var module1 = require('./module1');
-  var module2 = require('./module2');
-
-  exports.value = module2(2, 3);
+  module.exports = function (a, b) {
+    return a + b;
+  };
 
 }));

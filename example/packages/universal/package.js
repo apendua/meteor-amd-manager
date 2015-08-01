@@ -10,11 +10,15 @@ Package.onUse(function (api) {
   api.use('amd:manager');
 
   api.addFiles([
-    'manager.js',
+
+    '_.js',
     'index.js',
+    'module1.js',
+    'module2.js',
     'exports.js',
+
   ], ['client', 'server']);
-  
+
   api.export('Universal');
-  
+
 });
