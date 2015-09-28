@@ -7,3 +7,6 @@
 meteor-platform
 autopublish
 insecure
+amd:manager
+anti:gagarin@=0.4.11
+universal

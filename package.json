@@ -2,25 +2,20 @@
   "author": "Tomasz Lenarcik (apendua@gmail.com)",
   "name": "amd-manager",
   "description": "A simple utility class for creating AMD module managers",
-  "version": "0.0.2",
-  "homepage": "https://github.com/apendua/amd-manager",
+  "version": "0.2.0",
+  "homepage": "https://github.com/apendua/meteor-amd-manager",
   "repository": {
     "type": "git",
-    "url": "git://github.com/apendua/amd-manager.git"
+    "url": "git://github.com/apendua/meteor-amd-manager.git"
   },
   "scripts": {
-    "test": "./test.js"
+    "test": "./test.sh"
   },
-  "dependencies": {
-    "underscore": "^1.6.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "commander": "^2.2.0",
-    "chai": "^1.9.1",
-    "mocha": "^1.20.1"
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.17.1"
   },
-  "optionalDependencies": {},
-  "engines": {
-    "node": "0.10.x"
-  }
+  "optionalDependencies": {}
 }

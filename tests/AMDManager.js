@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
-var AMDManager = require('../manager.js');
+var AMDManager = require('../lib/AMDManager.js');
 
-describe('AMDManager', function () {
+describe('Test AMDManager', function () {
 
   var manager = new AMDManager();
 
@@ -69,7 +69,7 @@ describe('AMDManager', function () {
         expect(d).to.equal(25);
         done();
       });
-    })
+    });
 
   });
 
@@ -185,7 +185,7 @@ describe('AMDManager', function () {
 
       define('kebab-module', [], function(){
         return 'skewered';
-      })
+      });
 
     });
 
